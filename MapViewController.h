@@ -14,18 +14,10 @@
 @interface MapViewController : UIViewController <MKMapViewDelegate,UISearchDisplayDelegate,UISearchBarDelegate,UITableViewDelegate>
 
 {
-    __weak IBOutlet UIButton *location;
-    
-    __weak IBOutlet UISearchBar *searchAddres;
-    
-    
-    __weak IBOutlet UINavigationItem *TopNavigation;
-    
-    __weak IBOutlet UIToolbar *buttomBar;
-    
     
     CLLocationManager *_locationManager;
     
+    __weak IBOutlet UISearchBar *searchBar;
 //    UIImageView *position;  //替换移动地图时隐藏的大头针
     
     CLLocationCoordinate2D centerCoordinate;    //当前map坐标中心点坐标
@@ -39,10 +31,12 @@
 
     
     UILongPressGestureRecognizer *longPress;    //长按手势
+    
 }
 
-
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UINavigationItem *topNav;
 
+@property (weak, nonatomic) IBOutlet UINavigationBar *bottomNav;
 
 @end

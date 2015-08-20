@@ -26,14 +26,16 @@
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)openMap:(id)sender {
-    UIStoryboard *mainStoryboard = [UIStoryboard
-                                    storyboardWithName:@"map" bundle:nil];
-    UIViewController *indexViewController = [mainStoryboard
+    UIStoryboard *mapStoryboard = [UIStoryboard
+                                    storyboardWithName:@"MapView" bundle:nil];
+    UIViewController *mapViewController = [mapStoryboard
                                              instantiateViewControllerWithIdentifier:@"TDMap"];
     
-    indexViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    
-    [self presentViewController:indexViewController animated:YES completion:nil];
+    mapViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:mapViewController animated:YES completion:nil];
+//
+//    MapViewController *mapView = [[MapViewController alloc]init];
+//    [self presentViewController:mapView animated:YES completion:nil];
     
 }
 

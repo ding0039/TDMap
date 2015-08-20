@@ -8,8 +8,8 @@
 #define DEFAULTSPAN 0.01000
 
 #define ZOOM_LEVEL 5
-
-
+#define SCREEN_WIDTH  [[UIScreen mainScreen]bounds].size.width
+#define SCREEN_HEIGHT  [[UIScreen mainScreen]bounds].size.height
 #import "MapViewController.h"
 
 @interface MapViewController ()
@@ -24,32 +24,27 @@
     // Do any additional setup after loading the view.
     //初始化mapview
     [self initMapView];
+
+    
     
     searchResultName = [[NSMutableArray alloc] init];
     searchResultAddress = [[NSMutableArray alloc]init];
     searchResultLocation = [[NSMutableArray alloc]init];
 
+    searchBar.placeholder = @"输入你想搜索的地址";
     
-    searchAddres.delegate = self;
-    
-//    position = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"position"]];
-    
-//    position.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width/2 -12,[[UIScreen mainScreen] bounds].size.height/2-78, 24, 24);
-
-//    position.contentMode = UIViewContentModeScaleAspectFit;
-//    [_mapView addSubview:position];
-    
-    
-    [location.layer setCornerRadius:5];
-//    [upPosition.layer setCornerRadius:15];
+//    [self.navigationBar addSubview:_searchBar];
 
     
-    searchAddres.placeholder = @"输入你想搜索的地址";
-    searchAddres.translucent = NO;
-    
-    searchAddres.delegate = self;
+
 }
 
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+}
 -(void)initMapView{
     //请求定位服务
     _locationManager=[[CLLocationManager alloc]init];
@@ -57,6 +52,7 @@
         [_locationManager requestWhenInUseAuthorization];
     }
     [_locationManager startUpdatingHeading];
+    
     
     
     //    用一个经纬度初始化
@@ -112,9 +108,33 @@
 }
 //地图点击手势
 -(void)touchTap:(UIGestureRecognizer*)gestureRecognizer{
-    NSLog(@"点击了%@",self.navigationController);
-//    self.navigationController.navigationBarHidden = YES;
-    
+//    if (self.navigationBarHidden) {
+//        [UIView animateWithDuration:1
+//                              delay:0
+//             usingSpringWithDamping:1
+//              initialSpringVelocity:1
+//                            options:UIViewAnimationOptionCurveEaseOut
+//                         animations:^{
+//                             _mapView.frame = CGRectMake(0, 64,SCREEN_WIDTH,SCREEN_HEIGHT-128);
+//                             [self setNavigationBarHidden:NO animated:YES];
+//                             [self setToolbarHidden:NO animated:YES];
+//                             [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+//                         }
+//                         completion:nil];
+//    }else{
+//        [UIView animateWithDuration:1
+//                              delay:0
+//             usingSpringWithDamping:1
+//              initialSpringVelocity:1
+//                            options:UIViewAnimationOptionCurveEaseIn
+//                         animations:^{
+//                             _mapView.frame = CGRectMake(0, 0,SCREEN_WIDTH,SCREEN_HEIGHT);
+//                             [self setNavigationBarHidden:YES animated:YES];
+//                             [self setToolbarHidden:YES animated:YES];
+//                             [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+//                        }
+//                        completion:nil];
+//    }
 }
 
 
@@ -200,9 +220,9 @@
             
             
             annotationView.canShowCallout=true;     //允许交互点击
-            annotationView.calloutOffset=CGPointMake(0, -2);    //定义详情视图偏移量
-            annotationView.centerOffset = CGPointMake(0, 0);    //中心点上下偏移
-            annotationView.opaque = YES;
+//            annotationView.calloutOffset=CGPointMake(0, 0);    //定义详情视图偏移量
+//            annotationView.centerOffset = CGPointMake(0, 0);    //中心点上下偏移
+            annotationView.opaque = YES;    //不透明度，YES为不透明
             annotationView.animatesDrop = YES;  //从天而降的动画
             annotationView.draggable = YES; //可以拖动
             annotationView.selected = YES;  //标题自动显示
@@ -271,8 +291,9 @@
  *
  *  @param sender <#sender description#>
  */
-- (IBAction)backLocation:(UIButton *)sender {
-//    [self getAddressByLatitude:currentLocation.latitude longitude:currentLocation.longitude];
+- (IBAction)location:(id)sender {
+    //    [self getAddressByLatitude:currentLocation.latitude longitude:currentLocation.longitude];
+
     // 设置地图的显示范围, 让其显示到当前指定的位置
     [self position:currentLocation];
     
